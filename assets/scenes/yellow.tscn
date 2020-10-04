@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/img/yellow.png" type="Texture" id=1]
+
+[node name="yellow" type="Sprite"]
+position = Vector2( 254.692, 358.347 )
+texture = ExtResource( 1 )
