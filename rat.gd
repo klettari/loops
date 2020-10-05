@@ -15,62 +15,70 @@ var degreesBetweenRightAndDown = degreesRight + degreesHalfwayBetween
 var degreesBetweenDownAndLeft = degreesDown + degreesHalfwayBetween
 var degreesBetweenLeftAndUp = degreesLeft + degreesHalfwayBetween
 
-var rotationStep = 5
-var movementStep = 5
+var rotationStep = 1
+var movementStep = 3
 
 func _ready() :
 	rotation_degrees = degreesUp
 
-func _input(event) :
+func _physics_process(delta) :
 	normalizedDegrees()
 
-	if (rotation_degrees >= degreesBetweenLeftAndUp and rotation_degrees < degreesCircle) or (rotation_degrees >= degreesUp and rotation_degrees < degreesBetweenUpAndRight) :
-		moveRatLookingUp(event)
+	var betweenLeftAndUp = rotation_degrees >= degreesBetweenLeftAndUp and rotation_degrees < degreesCircle
+	var betweenUpAndRight = rotation_degrees >= degreesUp and rotation_degrees < degreesBetweenUpAndRight
+
+	if betweenLeftAndUp or betweenUpAndRight :
+		moveRatLookingUp()
 	elif rotation_degrees >= degreesBetweenUpAndRight and rotation_degrees < degreesBetweenRightAndDown :
-		moveRatLookingRight(event)
+		moveRatLookingRight()
 	elif rotation_degrees >= degreesBetweenRightAndDown and rotation_degrees < degreesBetweenDownAndLeft :
-		moveRatLookingDown(event)
+		moveRatLookingDown()
 	elif rotation_degrees >= degreesBetweenDownAndLeft and rotation_degrees < degreesBetweenLeftAndUp :
-		moveRatLookingLeft(event)
+		moveRatLookingLeft()
 
 func normalizedDegrees() :
+	rotation_degrees = round(rotation_degrees)
+
 	if rotation_degrees < 0 :
 		rotation_degrees = degreesCircle + rotation_degrees
 	elif rotation_degrees >= degreesCircle :
 		rotation_degrees = degreesStart + degreesCircle - rotation_degrees
 
-func moveRatLookingDown(event) :
-	if event.is_action_pressed("right") :
+func moveRatLookingDown() :
+	if Input.is_action_pressed("right") :
 		rotation_degrees -= rotationStep
-	elif event.is_action_pressed("left") :
+	elif Input.is_action_pressed("left") :
 		rotation_degrees += rotationStep
 
-	if event.is_action_pressed("down") :
+	if Input.is_action_pressed("down") :
 		position += Vector2(0, movementStep)
 
-func moveRatLookingUp(event) :
-	if event.is_action_pressed("right") :
+func moveRatLookingUp() :
+	if Input.is_action_pressed("right") :
+		print("moving rat looking up - right is pressed")
+		print(rotation_degrees)
 		rotation_degrees += rotationStep
-	elif event.is_action_pressed("left") :
+		print(rotation_degrees)
+	elif Input.is_action_pressed("left") :
 		rotation_degrees -= rotationStep
 
-	if event.is_action_pressed("up") :
+	if Input.is_action_pressed("up") :
 		position += Vector2(0, -movementStep)
 
-func moveRatLookingRight(event) :
-	if event.is_action_pressed("down") :
+func moveRatLookingRight() :
+	if Input.is_action_pressed("down") :
 		rotation_degrees += rotationStep
-	elif event.is_action_pressed("up") :
+	elif Input.is_action_pressed("up") :
 		rotation_degrees -= rotationStep
 
-	if event.is_action_pressed("right") :
+	if Input.is_action_pressed("right") :
 		position += Vector2(movementStep, 0)
 
-func moveRatLookingLeft(event) :
-	if event.is_action_pressed("up") :
+func moveRatLookingLeft() :
+	if Input.is_action_pressed("up") :
 		rotation_degrees += rotationStep
-	elif event.is_action_pressed("down") :
+	elif Input.is_action_pressed("down") :
 		rotation_degrees -= rotationStep
 
-	if event.is_action_pressed("left") :
+	if Input.is_action_pressed("left") :
 		position += Vector2(-movementStep, 0)
