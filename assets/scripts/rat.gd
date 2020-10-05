@@ -66,3 +66,7 @@ func moveRatLookingRight() :
 func moveRatLookingLeft() :
 	if Input.is_action_pressed("up") :
 		position += Vector2(-movementStep, 0)
+
+var collisionRange = 40
+func withinRange(node) :
+	return $head.global_position.distance_to(node.position) < collisionRange

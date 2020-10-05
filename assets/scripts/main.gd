@@ -18,6 +18,19 @@ var highestYValue = screenHeight - 124 / 2 - vericalOffset
 
 var totalLoopsOfEachKind = 20
 
+var orangeTexture = preload("res://assets/img/orange.png")
+var brokenOrangeTexture = preload("res://assets/img/orange-broken.png")
+var redTexture = preload("res://assets/img/red.png")
+var brokenRedTexture = preload("res://assets/img/red-broken.png")
+var yellowTexture = preload("res://assets/img/yellow.png")
+var brokenYellowTexture = preload("res://assets/img/yellow-broken.png")
+var greenTexture = preload("res://assets/img/green.png")
+var brokenGreenTexture = preload("res://assets/img/green-broken.png")
+var cyanTexture = preload("res://assets/img/cyan.png")
+var brokenCyanTexture = preload("res://assets/img/cyan-broken.png")
+var purpleTexture = preload("res://assets/img/purple.png")
+var brokenPurpleTexture = preload("res://assets/img/purple-broken.png")
+
 func _ready():
 	random = RandomNumberGenerator.new()
 	random.randomize()
@@ -37,10 +50,30 @@ func _ready():
 		placeLoop(packagedSceneCyan)
 		placeLoop(packagedScenePurple)
 
+func _physics_process(delta) :
+	var loops = get_tree().get_nodes_in_group("loops")
+	for loopIndex in range(loops.size() - 1, -1, -1) :
+		var loop = loops[loopIndex]
+		if $rat.withinRange(loop) :
+			var texture = loop.get_texture()
+			if texture == orangeTexture :
+				loop.set_texture(brokenOrangeTexture)
+			elif texture == redTexture :
+				loop.set_texture(brokenRedTexture)
+			elif texture == yellowTexture :
+				loop.set_texture(brokenYellowTexture)
+			elif texture == greenTexture :
+				loop.set_texture(brokenGreenTexture)
+			elif texture == cyanTexture :
+				loop.set_texture(brokenCyanTexture)
+			elif texture == purpleTexture :
+				loop.set_texture(brokenPurpleTexture)
+
 func placeLoop(packagedScene) :
 	var x = random.randi_range(lowestXValue, highestXValue)
 	var y = random.randi_range(lowestYValue, highestYValue)
 		
 	var loopInstance = packagedScene.instance()
 	loopInstance.set_position(Vector2(x, y))
+	loopInstance.add_to_group("loops")
 	add_child(loopInstance)
