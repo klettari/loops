@@ -55,10 +55,7 @@ func moveRatLookingDown() :
 
 func moveRatLookingUp() :
 	if Input.is_action_pressed("right") :
-		print("moving rat looking up - right is pressed")
-		print(rotation_degrees)
 		rotation_degrees += rotationStep
-		print(rotation_degrees)
 	elif Input.is_action_pressed("left") :
 		rotation_degrees -= rotationStep
 
