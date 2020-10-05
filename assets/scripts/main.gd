@@ -56,6 +56,9 @@ func _physics_process(delta) :
 		var loop = loops[loopIndex]
 		if $rat.withinRange(loop) :
 			var texture = loop.get_texture()
+			if texture == brokenOrangeTexture or texture == brokenRedTexture or texture == brokenYellowTexture or texture == brokenGreenTexture or texture == brokenCyanTexture or texture == brokenPurpleTexture :
+				remove_child(loop)
+
 			if texture == orangeTexture :
 				loop.set_texture(brokenOrangeTexture)
 			elif texture == redTexture :
@@ -68,6 +71,8 @@ func _physics_process(delta) :
 				loop.set_texture(brokenCyanTexture)
 			elif texture == purpleTexture :
 				loop.set_texture(brokenPurpleTexture)
+
+			break
 
 func placeLoop(packagedScene) :
 	var x = random.randi_range(lowestXValue, highestXValue)
