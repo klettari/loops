@@ -17,7 +17,7 @@ var degreesBetweenRightAndDown = degreesRight + degreesSlightliyForward
 var degreesBetweenDownAndLeft = degreesDown + degreesAlmostThere
 var degreesBetweenLeftAndUp = degreesLeft + degreesSlightliyForward
 
-var rotationStep = 1
+var rotationStep = 2
 var movementStep = 3
 
 func _ready() :
@@ -54,18 +54,26 @@ func normalizedDegrees() :
 func moveRatLookingDown() :
 	if Input.is_action_pressed("up") :
 		position += Vector2(0, movementStep)
+	elif Input.is_action_pressed("down") :
+		position += Vector2(0, -movementStep)
 
 func moveRatLookingUp() :
 	if Input.is_action_pressed("up") :
 		position += Vector2(0, -movementStep)
+	elif Input.is_action_pressed("down") :
+		position += Vector2(0, movementStep)
 
 func moveRatLookingRight() :
 	if Input.is_action_pressed("up") :
 		position += Vector2(movementStep, 0)
+	elif Input.is_action_pressed("down") :
+		position += Vector2(-movementStep, 0)
 
 func moveRatLookingLeft() :
 	if Input.is_action_pressed("up") :
 		position += Vector2(-movementStep, 0)
+	elif Input.is_action_pressed("down") :
+		position += Vector2(movementStep, 0)
 
 var collisionRange = 40
 func withinRange(node) :
